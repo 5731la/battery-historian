@@ -1,0 +1,10 @@
+version: "3.9"  # Specify docker-compose version
+
+services:
+  bathist:
+    build:
+      context: .  # Use the current directory as build context
+      dockerfile: Dockerfile  # Assuming there's a Dockerfile in the repo
+    ports:
+     - "127.0.0.1:8457:9999"  # Map port 8457 on the host to the container
+    restart: always  # Restart the container automatically on failure and reboot
