@@ -1,90 +1,27 @@
+# FORK NOTICE
+This is a fork based almost entirely on the spectacular work done by [itachi1706i.](<https://github.com/itachi1706/battery-historian>) This was originally a project maintained by Google, however, it was deprecated in 2022, likely due to the dependency on Python2. This is the version that is hosted at <https://bathist.stellasec.com>. The main usage that I'm aware of is in obtaining detailed reports of battery usage on WearOS devices, as they currently have no such support natively.
+
 # Battery Historian
 
 Battery Historian is a tool to inspect battery related information and events on an Android device running Android 5.0 Lollipop (API level 21) and later, while the device was not plugged in. It allows application developers to visualize system and application level events on a timeline with panning and zooming functionality, easily see various aggregated statistics since the device was last fully charged, and select an application and inspect the metrics that impact battery specific to the chosen application. It also allows an A/B comparison of two bugreports, highlighting differences in key battery related metrics.
 
 ## Getting Started
 
-#### Using Docker
+#### How to run a version for yourself?
 
-Install [Docker](<https://docs.docker.com/engine/installation/>).
-
-Run the Battery Historian image. Choose a port number and replace `<port>` with
-that number in the commands below:
-
+The simple way is to build a local docker image, following these basic steps:
+1. Clone this repository
+1. Build the docker image 
 ```
-docker -- run -p <port>:9999 gcr.io/android-battery-historian/stable:3.0 --port 9999
+docker build . -t battery-historian:stellasec
 ```
-
-For Linux and Mac OS X:
-
-* That's it, you're done! Historian will be available at
-  `http://localhost:<port>`.
-
-For Windows:
-
-* You may have to [enable Virtualization in your
-  BIOS](<http://www.itworld.com/article/2981515/virtualization/virtualbox-diagnose-and-fix-vt-xamd-v-hardware-acceleration-errors.html>).
-
-* Once you start Docker, it should tell you the IP address of the machine it is
-using. If, for example, the IP address is 123.456.78.90, Historian will be
-available at `http://123.456.78.90:<port>`.
-
-For more information about the port forwarding, see the [Docker
-documentation](<https://docs.docker.com/engine/reference/run/#/expose-incoming-ports>).
-
-#### Building from source code
-
-Make sure you have at least Golang version 1.8.1:
-
-* Follow the instructions available at <http://golang.org/doc/install> for downloading and installing the Go compilers, tools, and libraries.
-* Create a workspace directory according to the instructions at
-  <http://golang.org/doc/code.html#Organization>.
-* Ensure that `GOPATH` and `GOBIN` environment variables are appropriately set and added to your `$PATH`
-  environment variable. `$GOBIN should be set to $GOPATH/bin`.
-  * For Windows, you may set environment variables through the "Environment Variables" button on the
-  "Advanced" tab of the "System" control panel. Some versions of Windows provide this control panel
-  through the "Advanced System Settings" option inside the "System" control panel.
-  * For Linux and Mac OS X, you can add the following lines to your ~/.bashrc or
-    ~/.profile files (assuming your workspace is $HOME/work):
-
-      ```
-      export GOPATH=$HOME/work
-      export GOBIN=$GOPATH/bin
-      export PATH=$PATH:$GOBIN
-      ```
-
-Next, install Git from <https://git-scm.com/downloads> if it's not already installed.
-
-Next, make sure Python 2.7 (NOT Python 3!) is installed. See <https://python.org/downloads>
-if it isn't, and ensure that python is added to your `$PATH` environment variable.
-
-Next, install Java from <http://www.oracle.com/technetwork/java/javase/downloads/index.html>.
-
-Next, download the Battery Historian code and its dependencies:
-
+1. Run your local version
 ```
-$ go get -d -u github.com/google/battery-historian/...
+docker run -p 5731:9999 battery-historian:stellasec
 ```
+1. Battery Historian is now running on <http://localhost:5731>.
 
-Finally, run Battery Historian!
-
-```
-$ cd $GOPATH/src/github.com/google/battery-historian
-
-# Compile Javascript files using the Closure compiler
-$ go run setup.go
-
-# Run Historian on your machine (make sure $PATH contains $GOBIN)
-$ go run cmd/battery-historian/battery-historian.go [--port <default:9999>]
-```
-
-Remember, you must always run battery-historian from inside the `$GOPATH/src/github.com/google/battery-historian` directory:
-
-```
-cd $GOPATH/src/github.com/google/battery-historian
-go run cmd/battery-historian/battery-historian.go [--port <default:9999>]
-```
-
+Can this be run without docker? Probably, but I didn't try it, and quite frankly, neither should you. If you really want to do this, you should be smart enough to read a dockerfile and reverse engineer it.
 
 #### How to take a bug report
 
@@ -264,14 +201,6 @@ $ go run cmd/history-parse/local_history_parse.go --summary=totalTime --input=bu
 # Diff two bug reports
 $ go run cmd/checkin-delta/local_checkin_delta.go --input=bugreport_1.txt,bugreport_2.txt
 ```
-
-
-## Support
-
-- G+ Community (Discussion Thread: Battery Historian): https://plus.google.com/b/108967384991768947849/communities/114791428968349268860
-
-If you've found an error in this project, please file an issue:
-<https://github.com/google/battery-historian/issues>
 
 ## License
 
