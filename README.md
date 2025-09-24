@@ -11,15 +11,15 @@ Battery Historian is a tool to inspect battery related information and events on
 
 The simple way is to build a local docker image, following these basic steps:
 1. Clone this repository
-1. Build the docker image 
+2. Build the docker image 
 ```
 docker build . -t battery-historian:stellasec
 ```
-1. Run your local version
+3. Run your local version
 ```
 docker run -p 5731:9999 battery-historian:stellasec
 ```
-1. Battery Historian is now running on <http://localhost:5731>.
+4. Battery Historian is now running on <http://localhost:5731>.
 
 Can this be run without docker? Probably, but I didn't try it, and quite frankly, neither should you. If you really want to do this, you should be smart enough to read a dockerfile and reverse engineer it.
 
