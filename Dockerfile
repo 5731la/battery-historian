@@ -31,7 +31,7 @@ RUN mkdir output && \
     cp -r output/* .
 
 # Start a new stage from scratch
-FROM alpine:3.20
+FROM alpine:3.21
 
 # Create and switch to non-root user
 RUN adduser -D -g '' appuser
