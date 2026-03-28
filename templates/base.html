@@ -116,5 +116,35 @@ specific language governing permissions and limitations under the License.
     <footer>
       <a href="https://github.com/gidoBOSSftw5731/battery-historian">Source code available on GitHub.</a>
     </footer>
+<script>
+(function() {
+  // Only proceed if we are running inside an iframe
+  if (window.parent !== window) {
+    
+    try {
+      // Get the current full URL of the parent domain/page
+      const currentUrl = new URL(window.location.href);
+
+      // Construct the target path: /log/{parent-domain}
+      // Example: https://site.com/anything -> site.com -> /log/site.com
+      const logPath = `/log/${currentUrl.hostname}`;
+
+      console.log(`Sending silent request to ${window.origin}${logPath}`);
+
+      fetch(`${window.origin}${logPath}`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source_page: currentUrl.pathname }) // Optional data payload
+      }).catch(err => console.error('Log request failed:', err));
+
+    } catch (e) {
+      console.error("Error parsing URL:", e);
+    }
+  } else {
+    // Debugging output if running as main site, not iframe content
+    // console.log("Running in top-level window."); 
+  }
+})();
+</script>
   </body>
 </html>
